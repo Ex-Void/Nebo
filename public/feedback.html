@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обратная связь · Небо</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    // день или ночь — по часам пользователя (до отрисовки, чтобы фон не мигал)
+    (function () { var h = new Date().getHours(); document.documentElement.classList.add(h >= 7 && h < 19 ? "is-day" : "is-night"); })();
+  </script>
+</head>
+<body data-sky="clear">
+  <!-- анимированное небо -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky-layer sky-clear"></div>
+    <div class="sky-layer sky-partly"></div>
+    <div class="sky-layer sky-cloudy"></div>
+    <div class="sky-layer sky-fog"></div>
+    <div class="sky-layer sky-rain"></div>
+    <div class="sky-layer sky-snow"></div>
+    <div class="sky-layer sky-storm"></div>
+    <div class="sky-layer sky-admin"></div>
+    <div class="sky-glow"></div>
+    <canvas id="sky-canvas"></canvas>
+    <div class="flash-overlay"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-mark" id="brand-icon"></span>
+      <span class="brand-name">Небо</span>
+    </a>
+    <nav class="tabs" id="tabs">
+      <a href="/" class="tab">Сейчас</a>
+      <a href="/forecast" class="tab">Прогноз</a>
+      <a href="/feedback" class="tab active">Обратная связь</a>
+      <a href="/admin" class="tab tab-admin">Админ</a>
+      <span class="tab-indicator" aria-hidden="true"></span>
+    </nav>
+  </header>
+
+  <div class="toasts" id="toasts"></div>
+
+  <main class="page">
+    <section class="page-head reveal">
+      <h1>Обратная связь</h1>
+      <p class="muted">Если не нашли свой город или увидели ошибку - напишите нам.</p>
+    </section>
+
+    <div class="two-col">
+      <section class="glass form-card reveal">
+        <form class="form" id="feedback-form" novalidate>
+          <div class="field">
+            <input id="f-name" name="name" placeholder=" " required minlength="2" maxlength="80">
+            <label for="f-name">Ваше имя</label>
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <input id="f-email" name="email" type="email" placeholder=" " required maxlength="120">
+            <label for="f-email">E-mail</label>
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <textarea id="f-msg" name="message" rows="5" placeholder=" " required minlength="5" maxlength="2000"></textarea>
+            <label for="f-msg">Сообщение</label>
+            <span class="field-error"></span>
+            <span class="counter small muted" id="counter">0 / 2000</span>
+          </div>
+          <button class="btn btn-primary" type="submit">Отправить</button>
+        </form>
+
+        <div class="sent hidden" id="sent">
+          <svg viewBox="0 0 52 52" class="check"><circle cx="26" cy="26" r="24"/><path d="M14 27 l8 8 l16 -17"/></svg>
+          <h2>Сообщение отправлено!</h2>
+          <p class="muted">Спасибо, администратор его прочитает.</p>
+          <button type="button" class="btn" id="send-more">Написать ещё</button>
+        </div>
+      </section>
+
+      <section class="glass about reveal">
+        <h2>О проекте</h2>
+        <p>"Небо" - Учебный проект, созданный с помощью HTML, JavaScript, CSS студентом Военмеха из группы О746Б. Здесь вы можете найти погоду в доступных для просмотра городах.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>«Небо» — сайт прогноза погоды</span>
+    <span id="footer-date"></span>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/sky.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/feedback.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Погода сейчас · Небо</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    // день или ночь — по часам пользователя (до отрисовки, чтобы фон не мигал)
+    (function () { var h = new Date().getHours(); document.documentElement.classList.add(h >= 7 && h < 19 ? "is-day" : "is-night"); })();
+  </script>
+</head>
+<body data-sky="cloudy">
+  <!-- анимированное небо -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky-layer sky-clear"></div>
+    <div class="sky-layer sky-partly"></div>
+    <div class="sky-layer sky-cloudy"></div>
+    <div class="sky-layer sky-fog"></div>
+    <div class="sky-layer sky-rain"></div>
+    <div class="sky-layer sky-snow"></div>
+    <div class="sky-layer sky-storm"></div>
+    <div class="sky-layer sky-admin"></div>
+    <div class="sky-glow"></div>
+    <canvas id="sky-canvas"></canvas>
+    <div class="flash-overlay"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-mark" id="brand-icon"></span>
+      <span class="brand-name">Небо</span>
+    </a>
+    <nav class="tabs" id="tabs">
+      <a href="/" class="tab active">Сейчас</a>
+      <a href="/forecast" class="tab">Прогноз</a>
+      <a href="/feedback" class="tab">Обратная связь</a>
+      <a href="/admin" class="tab tab-admin">Админ</a>
+      <span class="tab-indicator" aria-hidden="true"></span>
+    </nav>
+  </header>
+
+  <div class="toasts" id="toasts"></div>
+
+  <main class="page">
+    <section class="glass empty reveal hidden" id="no-cities">
+      <h1>Нет городов</h1>
+      <p>Добавьте город в <a href="/admin">панели администратора</a>.</p>
+    </section>
+
+    <div id="now-page" class="hidden">
+      <section class="hero">
+        <div class="hero-main glass reveal">
+          <div class="city-picker">
+            <label for="city-select" class="muted">Город</label>
+            <div class="select-wrap"><select id="city-select"></select></div>
+          </div>
+          <div class="now-grid" id="now-grid">
+            <div>
+              <h1 class="city-name" id="city-name"></h1>
+              <p class="muted city-descr" id="city-descr"></p>
+              <div class="big-temp" id="temp" data-temp data-count="0">0°</div>
+              <p class="condition" id="condition"></p>
+              <p class="muted">Ощущается как <b id="feels"></b></p>
+            </div>
+            <div class="hero-icon" id="hero-icon"></div>
+          </div>
+          <p class="updated muted">Обновлено <span id="updated"></span> · источник: <span id="source"></span></p>
+        </div>
+
+        <div class="tiles">
+          <div class="tile glass reveal">
+            <span class="tile-label">Влажность</span>
+            <div class="ring" id="ring" data-ring>
+              <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="50"/><circle class="ring-fg" cx="60" cy="60" r="50"/></svg>
+              <span class="ring-value"><b id="humidity" data-count="0">0</b>%</span>
+            </div>
+          </div>
+          <div class="tile glass reveal">
+            <span class="tile-label">Ветер</span>
+            <div class="wind" id="wind-box">
+              <svg viewBox="0 0 100 110" class="turbine">
+                <line x1="50" y1="50" x2="50" y2="108" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <g class="blades"><path d="M50 50 L46 12 Q50 6 54 12 Z"/><path d="M50 50 L46 12 Q50 6 54 12 Z" transform="rotate(120 50 50)"/><path d="M50 50 L46 12 Q50 6 54 12 Z" transform="rotate(240 50 50)"/><circle cx="50" cy="50" r="5"/></g>
+              </svg>
+              <span class="tile-value"><b id="wind" data-count="0" data-decimals="1">0</b> м/с</span>
+            </div>
+          </div>
+          <div class="tile glass reveal">
+            <span class="tile-label">Давление</span>
+            <div class="gauge" id="gauge" data-gauge>
+              <svg viewBox="0 0 120 70"><path class="gauge-bg" d="M10 62 A50 50 0 0 1 110 62"/><line class="gauge-needle" x1="60" y1="62" x2="60" y2="20"/><circle cx="60" cy="62" r="5" fill="currentColor"/></svg>
+              <span class="tile-value"><b id="pressure" data-count="0">0</b> мм рт. ст.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass strip reveal">
+        <div class="section-head">
+          <h2>Ближайшие дни</h2>
+          <a class="link-arrow" href="/forecast" id="forecast-link">Подробный прогноз →</a>
+        </div>
+        <div class="days" id="days"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>«Небо» — сайт прогноза погоды</span>
+    <span id="footer-date"></span>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/sky.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/now.js"></script>
+</body>
+</html>

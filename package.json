@@ -1,0 +1,13 @@
+{
+  "name": "nebo-weather",
+  "version": "1.0.0",
+  "description": "Сайт прогноза погоды «Небо»: HTML, CSS, JavaScript и сервер на Node.js",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

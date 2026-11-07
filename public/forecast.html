@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Прогноз на неделю · Небо</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    // день или ночь — по часам пользователя (до отрисовки, чтобы фон не мигал)
+    (function () { var h = new Date().getHours(); document.documentElement.classList.add(h >= 7 && h < 19 ? "is-day" : "is-night"); })();
+  </script>
+</head>
+<body data-sky="cloudy">
+  <!-- анимированное небо -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky-layer sky-clear"></div>
+    <div class="sky-layer sky-partly"></div>
+    <div class="sky-layer sky-cloudy"></div>
+    <div class="sky-layer sky-fog"></div>
+    <div class="sky-layer sky-rain"></div>
+    <div class="sky-layer sky-snow"></div>
+    <div class="sky-layer sky-storm"></div>
+    <div class="sky-layer sky-admin"></div>
+    <div class="sky-glow"></div>
+    <canvas id="sky-canvas"></canvas>
+    <div class="flash-overlay"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-mark" id="brand-icon"></span>
+      <span class="brand-name">Небо</span>
+    </a>
+    <nav class="tabs" id="tabs">
+      <a href="/" class="tab">Сейчас</a>
+      <a href="/forecast" class="tab active">Прогноз</a>
+      <a href="/feedback" class="tab">Обратная связь</a>
+      <a href="/admin" class="tab tab-admin">Админ</a>
+      <span class="tab-indicator" aria-hidden="true"></span>
+    </nav>
+  </header>
+
+  <div class="toasts" id="toasts"></div>
+
+  <main class="page">
+    <section class="page-head reveal">
+      <h1>Прогноз на 7 дней</h1>
+      <div class="chips" id="city-chips" aria-label="Выбор города"></div>
+    </section>
+
+    <section class="glass empty reveal hidden" id="no-data"><h2 id="no-data-text">Нет городов</h2></section>
+
+    <div id="forecast-page" class="hidden">
+      <section class="week" id="week"></section>
+
+      <section class="glass chart-card reveal">
+        <div class="section-head">
+          <h2 id="chart-title">Температура и осадки</h2>
+          <div class="legend">
+            <span><i class="lg lg-max"></i>максимум</span>
+            <span><i class="lg lg-min"></i>минимум</span>
+            <span><i class="lg lg-pr"></i>осадки, %</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="temp-chart" height="300"></canvas>
+          <div class="chart-tip" id="chart-tip"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>«Небо» — сайт прогноза погоды</span>
+    <span id="footer-date"></span>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/sky.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/chart.js"></script>
+  <script src="/js/forecast.js"></script>
+</body>
+</html>
